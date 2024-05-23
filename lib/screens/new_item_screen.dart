@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import '../models/grocery_item.dart';
-import '../models/category.dart';
-import '../data/categories.dart';
+import 'package:shop_app/models/grocery_item.dart';
+import 'package:shop_app/models/category.dart';
+import 'package:shop_app/data/categories.dart';
 
-class NewItem extends StatefulWidget {
-  const NewItem({super.key});
+class NewItemScreen extends StatefulWidget {
+  const NewItemScreen({super.key});
   @override
-  State<NewItem> createState() => _NewItemState();
+  State<NewItemScreen> createState() => _NewItemScreenState();
 }
 
-class _NewItemState extends State<NewItem> {
+class _NewItemScreenState extends State<NewItemScreen> {
   final _formKey = GlobalKey<FormState>();
   String _enteredName = '';
   int _enteredQuantity = 0;
-  Category _selectedCategory = categories[Categories.fruit]!;
+  CategoryModel _selectedCategory = categories[Categories.fruit]!;
   bool _isLoading = false;
 
   void _saveItem() {
@@ -45,7 +45,7 @@ class _NewItemState extends State<NewItem> {
 
         if (res.statusCode == 200) {
           Navigator.of(context).pop(
-            GroceryItem(
+            GroceryItemModel(
               id: resData['name'],
               name: _enteredName,
               quantity: _enteredQuantity,
@@ -133,7 +133,7 @@ class _NewItemState extends State<NewItem> {
                             ),
                           ),
                       ],
-                      onChanged: (Category? value) {
+                      onChanged: (CategoryModel? value) {
                         setState(() {
                           _selectedCategory = value!;
                         });

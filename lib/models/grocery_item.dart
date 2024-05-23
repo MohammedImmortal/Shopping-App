@@ -1,12 +1,12 @@
-import '../models/category.dart';
+import 'package:shop_app/models/category.dart';
 
-class GroceryItem {
+class GroceryItemModel {
   final String id;
   final String name;
   final int quantity;
-  final Category category;
+  final CategoryModel category;
 
-  GroceryItem({
+  GroceryItemModel({
     required this.id,
     required this.name,
     required this.quantity,

@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import '../data/categories.dart';
-import '../models/category.dart';
-import '../models/grocery_item.dart';
-import '../widgets/new_item.dart';
+import 'package:shop_app/data/categories.dart';
+import 'package:shop_app/models/category.dart';
+import 'package:shop_app/models/grocery_item.dart';
+import 'package:shop_app/screens/new_item_screen.dart';
 
-class GroceryList extends StatefulWidget {
-  const GroceryList({super.key});
+class GroceryScreen extends StatefulWidget {
+  const GroceryScreen({super.key});
 
   @override
-  State<GroceryList> createState() => _GroceryListState();
+  State<GroceryScreen> createState() => _GroceryScreenState();
 }
 
-class _GroceryListState extends State<GroceryList> {
-  List<GroceryItem> _groceryItems = [];
+class _GroceryScreenState extends State<GroceryScreen> {
+  List<GroceryItemModel> _groceryItems = [];
   bool _isLoading = true;
   String? _error;
 
@@ -40,15 +40,15 @@ class _GroceryListState extends State<GroceryList> {
         return;
       }
       final Map<String, dynamic> loadedData = json.decode(res.body);
-      final List<GroceryItem> loadedItems = [];
+      final List<GroceryItemModel> loadedItems = [];
       for (var item in loadedData.entries) {
-        final Category category = categories.entries
+        final CategoryModel category = categories.entries
             .firstWhere(
               (element) => element.value.title == item.value['category'],
             )
             .value;
         loadedItems.add(
-          GroceryItem(
+          GroceryItemModel(
             id: item.key,
             name: item.value['name'],
             quantity: item.value['quantity'],
@@ -129,7 +129,7 @@ class _GroceryListState extends State<GroceryList> {
     );
   }
 
-  void _removeItem(GroceryItem item) async {
+  void _removeItem(GroceryItemModel item) async {
     final index = _groceryItems.indexOf(item);
     setState(() {
       _groceryItems.remove(item);
@@ -152,9 +152,9 @@ class _GroceryListState extends State<GroceryList> {
   }
 
   _addItem() async {
-    final newItem = await Navigator.of(context).push<GroceryItem>(
+    final newItem = await Navigator.of(context).push<GroceryItemModel>(
       MaterialPageRoute(
-        builder: (ctx) => const NewItem(),
+        builder: (ctx) => const NewItemScreen(),
       ),
     );
     if (newItem == null) {

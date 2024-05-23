@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 enum Categories {
@@ -14,8 +13,11 @@ enum Categories {
   other,
 }
 
-class Category {
+class CategoryModel {
   final String title;
   final Color color;
-  const Category(this.title, this.color);
+  const CategoryModel(
+    this.title,
+    this.color,
+  );
 }
